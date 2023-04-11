@@ -25,8 +25,10 @@ FINAL_TAX= .72
 def properties():
 #this will read from the properties file
     try:
-        df= pd.read_csv('properties.csv')
-        return df
+        propDF= pd.read_csv('properties.csv')
+        propDF['Price']= propDF['Price'].str.replace('[$|,]', '', regex=True)
+        propDF['Price']=pd.to_numeric(propDF['Price'])
+        return propDF
         
         '''
         while True:
@@ -38,10 +40,9 @@ def properties():
         print("Properties file not found. Please make sure it exists")
 
 
-df= properties()
-print(df)
+propDF= properties()
+print(propDF)
 #read it from the file(done)
-#will require a loop(done)
 
 '''
 def calculateTax(contents):
