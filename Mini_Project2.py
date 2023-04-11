@@ -16,6 +16,7 @@ compare the prices(def create) of each property and tell the user whats the best
 #Project part 2
 
 #this will allow me to create 
+import pandas as pd
 from tabulate import tabulate
 
 #Final Var for tax
@@ -24,16 +25,25 @@ FINAL_TAX= .72
 def properties():
 #this will read from the properties file
     try:
+        df= pd.read_csv('properties.csv')
+        return df
+        
+        '''
         while True:
-            with open('properties.txt', 'r') as f1:
+            with open('properties.csv', 'r') as f1:
                 read_properties= f1.read()
-            return read_properties
+            return read_properties'''
+        
     except FileNotFoundError:
         print("Properties file not found. Please make sure it exists")
 
+
+df= properties()
+print(df)
 #read it from the file(done)
 #will require a loop(done)
 
+'''
 def calculateTax(contents):
 #this will calculate the tax for each property
     
@@ -64,7 +74,7 @@ def compareTax():
 #this will need a loop to compare the prices of the properties
     pass
 
-
+'''
 
 
 
