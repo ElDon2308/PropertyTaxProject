@@ -15,8 +15,9 @@ compare the prices(def create) of each property and tell the user whats the best
 '''
 #Project part 2
 
-#this will allow me to create 
+#Importing needed libraries
 import pandas as pd
+import numpy as np 
 from tabulate import tabulate
 
 #Final Var for tax
@@ -26,46 +27,49 @@ def properties():
 #this will read from the properties file
     try:
         propDF= pd.read_csv('properties.csv')
+        #remove special chars
         propDF['Price']= propDF['Price'].str.replace('[$|,]', '', regex=True)
+        #converts the price column to all numeric values
         propDF['Price']=pd.to_numeric(propDF['Price'])
+        
         return propDF
-        
-        '''
-        while True:
-            with open('properties.csv', 'r') as f1:
-                read_properties= f1.read()
-            return read_properties'''
-        
+    
     except FileNotFoundError:
-        print("Properties file not found. Please make sure it exists")
+        print("Properties file not found. Please make sure it exists.")
+        
+    except EOFError:
+        print("End of file reached!")
 
 
-propDF= properties()
-print(propDF)
-#read it from the file(done)
+def calculateAssesVal(propDF):
+    assesVal = propDF['Price'] * 0.6
+    return assesVal
+
+
+def propTax(assesVal):
+    av= assesVal
+    calc= float(av/100)
+    propTax=float(FINAL_TAX*calc)
+    return propTax
+    
+  
+def updateFile():
+    propDF = properties()
+    propDF['Assessment Value'] = calculateAssesVal(propDF)
+    propDF['Property Tax'] = propTax(propDF['Assessment Value'])
+    print(propDF) # print the updated data frame
+    propDF.to_csv('properties.csv', index=False)
+    print('File updated successfully') # print a success message
+
+
+def main():
+    updateFile()
+  
+main() 
+    
+
 
 '''
-def calculateTax(contents):
-#this will calculate the tax for each property
-    
-    #split the data into lines 
-    contents= properties()
-    
-    #split int line
-    lines= contents.split('\n')
-    #loop to find the line that has the price of the property
-    
-    for line in lines:
-        #take the price from the string
-        price_str= line.split(':')[-1].strip()
-        #remove the price from the line
-        price_str= price_str.replace(',','')
-        #convert the price to a number
-        prince = float(price_str)
-
-    
-    pass
-
 def prop_assessment():
     pass
 
@@ -76,7 +80,6 @@ def compareTax():
     pass
 
 '''
-
 
 
     
