@@ -24,13 +24,18 @@ from tabulate import tabulate
 FINAL_TAX= .72
 
 def properties():
-#this will read from the properties file
+    # This will read from the properties file
     try:
-        propDF= pd.read_csv('properties.csv')
-        #remove special chars
-        propDF['Price']= propDF['Price'].str.replace('[$|,]', '', regex=True)
-        #converts the price column to all numeric values
-        propDF['Price']=pd.to_numeric(propDF['Price'])
+        propDF = pd.read_csv('properties.csv')
+        
+        # Convert Price column to string
+        propDF['Price'] = propDF['Price'].astype(str)
+        
+        # Remove special chars
+        propDF['Price'] = propDF['Price'].str.replace('[$|,]', '', regex=True)
+        
+        # Converts the price column to all numeric values
+        propDF['Price'] = pd.to_numeric(propDF['Price'])
         
         return propDF
     
