@@ -39,32 +39,40 @@ def properties():
         
         return propDF
     
-    except FileNotFoundError:
-        print("Properties file not found. Please make sure it exists.")
-        
+    except FileNotFoundError as err:
+        print('404: ', err)
+    
     except EOFError:
         print("End of file reached!")
 
 
 def calculateAssesVal(propDF):
+    
     assesVal = propDF['Price'] * 0.6
+    
     return assesVal
 
 
 def propTax(assesVal):
+    
     av= assesVal
+    
     calc= float(av/100)
+    
     propTax=float(FINAL_TAX*calc)
+    
     return propTax
     
   
 def updateFile():
     propDF = properties()
+    
     propDF['Assessment Value'] = calculateAssesVal(propDF)
+    
     propDF['Property Tax'] = propTax(propDF['Assessment Value'])
-    print(propDF) # print the updated data frame
+    
     propDF.to_csv('properties.csv', index=False)
-    print('File updated successfully') # print a success message
+    
 
 
 def main():
