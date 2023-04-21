@@ -17,8 +17,6 @@ compare the prices(def create) of each property and tell the user whats the best
 
 #Importing needed libraries
 import pandas as pd
-import numpy as np 
-from tabulate import tabulate
 
 #Final Var for tax
 FINAL_TAX= .72
@@ -55,13 +53,11 @@ def calculateAssesVal(propDF):
 
 def propTax(assesVal):
     
-    av= assesVal
+    calc = assesVal / 100
     
-    calc= float(av/100)
+    prop_tax = FINAL_TAX * calc
     
-    propTax=float(FINAL_TAX*calc)
-    
-    return propTax
+    return prop_tax
     
   
 def updateFile():
@@ -70,7 +66,7 @@ def updateFile():
     propDF['Assessment Value'] = calculateAssesVal(propDF)
     
     propDF['Property Tax'] = propTax(propDF['Assessment Value'])
-    
+    print(propDF)
     propDF.to_csv('properties.csv', index=False)
     
 
