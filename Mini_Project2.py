@@ -66,13 +66,22 @@ def updateFile():
     propDF['Assessment Value'] = calculateAssesVal(propDF)
     
     propDF['Property Tax'] = propTax(propDF['Assessment Value'])
-    print(propDF)
+
     propDF.to_csv('properties.csv', index=False)
     
 
 
 def main():
     updateFile()
+    df= pd.read_csv('properties.csv')
+    num_rows= df.shape[0]
+    for i in range(num_rows):
+        row = df.loc[i]
+        prop = row['Municipality']
+        aVal= row['Assessment Value']
+        tx= row['Property Tax']   
+        message= f'{prop} has an assessment value of ${aVal:,.2f} and a property tax of ${tx:.2f}'
+        print(message)
   
 main() 
     
